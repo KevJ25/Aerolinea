@@ -1,0 +1,94 @@
+<!doctype html>
+<html lang="es">
+    <head>
+        <meta charset="utf-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1" />
+        <title>Crear cuenta · Sistema de Gestión de Aerolínea</title>
+        <link rel="icon" href="/recursos/icono.svg" />
+        <link rel="stylesheet" href="/recursos/estilos.css" />
+        <script type="module" src="/recursos/registro.js"></script>
+    </head>
+    <body>
+        <div class="acceso">
+            <section class="acceso__panel" aria-label="Presentación">
+                <span class="marca">Sistema de Gestión de Aerolínea</span>
+                <h1>Cree su cuenta de pasajero</h1>
+                <p>
+                    Con su cuenta podrá consultar vuelos, apartar su asiento y revisar sus
+                    reservaciones. Las cuentas de empleado y administrador las da de alta un
+                    administrador.
+                </p>
+                <p class="nota-panel"><a href="/iniciar-sesion">Volver a iniciar sesión</a></p>
+            </section>
+            <main class="acceso__formulario">
+                <form id="formulario" class="formulario" novalidate aria-labelledby="titulo">
+                    <h2 id="titulo">Crear cuenta</h2>
+                    <div id="mensaje" class="oculto"></div>
+                    <div class="campo">
+                        <label for="nombre">Nombre completo</label>
+                        <input
+                            id="nombre"
+                            name="nombre"
+                            type="text"
+                            autocomplete="name"
+                            maxlength="120"
+                            required
+                        />
+                    </div>
+                    <div class="campo">
+                        <label for="correo">Correo electrónico</label>
+                        <input
+                            id="correo"
+                            name="correo"
+                            type="email"
+                            autocomplete="email"
+                            maxlength="120"
+                            required
+                        />
+                    </div>
+                    <div class="campos-2">
+                        <div class="campo">
+                            <label for="contrasena">Contraseña</label>
+                            <input
+                                id="contrasena"
+                                name="contrasena"
+                                type="password"
+                                autocomplete="new-password"
+                                maxlength="128"
+                                aria-describedby="politica"
+                                required
+                            />
+                        </div>
+                        <div class="campo">
+                            <label for="confirmacion">Confirmar contraseña</label>
+                            <input
+                                id="confirmacion"
+                                name="confirmacion"
+                                type="password"
+                                autocomplete="new-password"
+                                maxlength="128"
+                                required
+                            />
+                        </div>
+                    </div>
+                    <div>
+                        <span class="etiqueta">Su contraseña debe tener</span>
+                        <ul id="politica" class="politica"></ul>
+                    </div>
+                    <label class="casilla">
+                        <input id="aviso" name="aviso" type="checkbox" />
+                        <span
+                            >He leído el
+                            <a href="/aviso-de-privacidad" target="_blank" rel="noopener"
+                                >aviso de privacidad</a
+                            >
+                            y acepto el tratamiento de mis datos personales para gestionar mis
+                            reservaciones.</span
+                        >
+                    </label>
+                    <button id="enviar" class="boton" type="submit">Crear cuenta</button>
+                </form>
+            </main>
+        </div>
+    </body>
+</html>

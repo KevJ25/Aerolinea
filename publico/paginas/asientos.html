@@ -1,0 +1,75 @@
+<!doctype html>
+<html lang="es">
+    <head>
+        <meta charset="utf-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1" />
+        <title>Asientos del vuelo · Sistema de Gestión de Aerolínea</title>
+        <link rel="icon" href="/recursos/icono.svg" />
+        <link rel="stylesheet" href="/recursos/estilos.css" />
+        <script type="module" src="/recursos/asientos.js"></script>
+    </head>
+    <body>
+        <main class="principal">
+            <p><a id="volver" href="/vuelos">Volver a la búsqueda</a></p>
+            <div id="mensaje" class="oculto"></div>
+            <div class="disposicion-reserva">
+                <section class="tarjeta" aria-labelledby="t-cabina">
+                    <div class="fila-titulo">
+                        <h1 id="t-cabina" class="titulo-pagina">Asientos del vuelo</h1>
+                        <span id="capacidad" class="nota"></span>
+                    </div>
+                    <div class="simbologia" aria-label="Simbología">
+                        <span><i></i>Libre</span>
+                        <span><i class="simbolo--RESERVADO"></i>Reservado</span>
+                        <span><i class="simbolo--OCUPADO"></i>Ocupado</span>
+                        <span><i class="simbolo--elegido"></i>Su elección</span>
+                    </div>
+                    <div class="cabina-contenedor"><div id="cabina" class="cabina"></div></div>
+                    <p class="nota">
+                        La disponibilidad se actualiza automáticamente cada 5 segundos.
+                    </p>
+                </section>
+                <aside class="tarjeta" aria-labelledby="t-resumen">
+                    <h2 id="t-resumen">Resumen</h2>
+                    <div class="resumen-iata">
+                        <span id="r-origen" class="iata"></span><span aria-hidden="true">→</span
+                        ><span id="r-destino" class="iata"></span>
+                    </div>
+                    <dl class="datos">
+                        <dt>Vuelo</dt>
+                        <dd id="r-vuelo"></dd>
+                        <dt>Salida</dt>
+                        <dd id="r-salida"></dd>
+                        <dt>Llegada</dt>
+                        <dd id="r-llegada"></dd>
+                        <dt>Estado</dt>
+                        <dd id="r-estado"></dd>
+                        <dt>Tarifa</dt>
+                        <dd id="r-tarifa"></dd>
+                        <dt>Asiento</dt>
+                        <dd id="r-asiento">Sin elegir</dd>
+                    </dl>
+                    <form id="form-reserva" class="formulario oculto" novalidate>
+                        <div id="campo-pasajero" class="campo oculto">
+                            <label for="correo-pasajero">Correo del pasajero</label>
+                            <input
+                                id="correo-pasajero"
+                                name="correoPasajero"
+                                type="email"
+                                maxlength="120"
+                            />
+                        </div>
+                        <button id="reservar" class="boton" type="submit" disabled>
+                            Elija un asiento libre
+                        </button>
+                        <p class="nota">
+                            Al reservar recibirá un código de reservación. Si no se registra el
+                            pago, la reservación expira a las 48 horas o 24 horas antes de la
+                            salida, lo que ocurra primero, y el asiento se libera.
+                        </p>
+                    </form>
+                </aside>
+            </div>
+        </main>
+    </body>
+</html>

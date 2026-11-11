@@ -1,0 +1,81 @@
+{
+    "name": "sistema-gestion-aerolinea",
+    "version": "0.1.0",
+    "private": true,
+    "description": "Sistema de Gestión de Aerolínea · Manual de Calidad MC-SGA-001",
+    "engines": {
+        "node": ">=22"
+    },
+    "scripts": {
+        "build": "tsc -p tsconfig.build.json",
+        "start": "node dist/main.js",
+        "start:dev": "tsc -p tsconfig.build.json --watch",
+        "lint": "eslint .",
+        "formato": "prettier --check .",
+        "formato:aplicar": "prettier --write .",
+        "test": "jest",
+        "test:cobertura": "jest --coverage",
+        "db:iniciar": "docker compose up -d --build --wait postgres",
+        "db:detener": "docker compose stop",
+        "db:consola": "docker compose exec postgres psql",
+        "db:migrar": "docker compose exec -T postgres bash /sga/db/migrar.sh",
+        "db:semillas": "docker compose exec -T postgres psql -X -v ON_ERROR_STOP=1 -f /sga/db/semillas/datos_demostracion.sql",
+        "db:probar": "docker compose exec -T postgres bash /sga/db/probar.sh",
+        "db:prueba:concurrencia": "docker compose exec -T postgres bash /sga/db/pruebas/concurrencia_rf11.sh",
+        "db:prueba:privilegios": "docker compose exec -T postgres psql -X -v ON_ERROR_STOP=1 -f /sga/db/pruebas/privilegios.sql",
+        "db:prueba:auditoria": "docker compose exec -T postgres bash /sga/db/pruebas/auditoria_pgaudit.sh",
+        "db:respaldar": "docker compose exec -T postgres bash /sga/db/respaldos/respaldar.sh",
+        "db:probar-restauracion": "docker compose exec -T postgres bash /sga/db/respaldos/prueba_restauracion.sh",
+        "db:expediente": "docker compose exec -T postgres bash /sga/db/evidencias/generar_expediente.sh",
+        "db:expediente:completo": "docker compose exec -T -e SGA_INCLUIR_PRUEBAS=1 postgres bash /sga/db/evidencias/generar_expediente.sh",
+        "db:cuenta": "docker compose exec postgres bash /sga/db/crear_cuentas.sh",
+        "configurar": "node scripts/configurar.mjs",
+        "sistema:iniciar": "docker compose up -d --build --wait postgres app",
+        "sistema:detener": "docker compose --profile enlace stop",
+        "db:preparar": "docker compose exec -T postgres bash /sga/db/preparar.sh",
+        "enlace": "node scripts/enlace.mjs",
+        "enlace:cerrar": "docker compose --profile enlace stop tunel",
+        "prueba:aceptacion": "node --env-file=.env pruebas-aceptacion/ejecutar.mjs",
+        "db:itinerario": "docker compose exec -T postgres psql -X -q -v ON_ERROR_STOP=1 -f /sga/db/semillas/itinerario_demostracion.sql",
+        "prueba:rendimiento": "node --env-file=.env pruebas-aceptacion/rendimiento.mjs",
+        "prueba:disponibilidad": "node --env-file=.env pruebas-aceptacion/disponibilidad.mjs",
+        "evidencia:git": "node scripts/evidencia-git.mjs"
+    },
+    "jest": {
+        "preset": "ts-jest",
+        "testEnvironment": "node",
+        "roots": [
+            "<rootDir>/src"
+        ],
+        "collectCoverageFrom": [
+            "src/**/*.ts",
+            "!src/main.ts"
+        ]
+    },
+    "dependencies": {
+        "@nestjs/common": "11.2.7",
+        "@nestjs/core": "11.2.7",
+        "@nestjs/platform-express": "11.2.7",
+        "hash-wasm": "4.12.0",
+        "pg": "8.23.1",
+        "reflect-metadata": "0.2.2",
+        "rxjs": "7.8.2"
+    },
+    "devDependencies": {
+        "@commitlint/cli": "21.2.3",
+        "@commitlint/config-conventional": "21.2.3",
+        "@eslint/js": "9.39.5",
+        "@nestjs/testing": "11.2.7",
+        "@types/express": "5.0.6",
+        "@types/jest": "30.0.0",
+        "@types/node": "22.20.4",
+        "@types/pg": "8.23.1",
+        "eslint": "9.39.5",
+        "globals": "16.5.0",
+        "jest": "30.5.2",
+        "prettier": "3.9.9",
+        "ts-jest": "29.4.14",
+        "typescript": "5.9.3",
+        "typescript-eslint": "8.71.0"
+    }
+}

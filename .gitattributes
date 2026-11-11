@@ -1,0 +1,5 @@
+# Los scripts de shell y SQL deben conservar finales de línea LF aunque el
+# repositorio se clone en Windows; con CRLF, bash falla con "$'\r': command not found".
+* text=auto eol=lf
+*.sh text eol=lf
+*.sql text eol=lf

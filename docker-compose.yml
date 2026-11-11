@@ -1,0 +1,64 @@
+# Sistema de Gestión de Aerolínea · base de datos, aplicación y enlace público.
+# Funciona igual en Windows, macOS y Linux; la máquina solo necesita Docker.
+# Docker Compose lee el archivo .env de esta carpeta automáticamente
+# (genérelo con `npm run configurar`).
+services:
+    postgres:
+        build: ./db/servidor
+        image: sga-postgres:16
+        container_name: sga-postgres
+        environment:
+            TZ: America/Mexico_City
+            POSTGRES_DB: ${PGDATABASE:-sga}
+            POSTGRES_USER: ${PGUSER:-sga}
+            POSTGRES_PASSWORD: ${PGPASSWORD:?Ejecute npm run configurar}
+            # Conexión de los scripts de db/ dentro del contenedor
+            PGHOST: 127.0.0.1
+            PGUSER: ${PGUSER:-sga}
+            PGPASSWORD: ${PGPASSWORD}
+            PGDATABASE: ${PGDATABASE:-sga}
+            # Contraseña de la cuenta de la aplicación, que crea db/preparar.sh
+            SGA_API_CONTRASENA: ${SGA_API_CONTRASENA:?Ejecute npm run configurar}
+            SGA_RESPALDO_CLAVE: ${SGA_RESPALDO_CLAVE:?Ejecute npm run configurar}
+            SGA_RESPALDO_DIR: /sga/respaldos
+            SGA_EVIDENCIAS_DIR: /sga/evidencias/restauracion
+            SGA_EXPEDIENTE_DIR: /sga/evidencias
+            SGA_RESPONSABLE: ${SGA_RESPONSABLE:-Equipo de desarrollo}
+        ports:
+            - '127.0.0.1:5432:5432'
+        volumes:
+            - datos_sga:/var/lib/postgresql/data
+            - ./:/sga
+
+    app:
+        build: .
+        image: sga-app:sprint1
+        container_name: sga-app
+        depends_on:
+            postgres:
+                condition: service_healthy
+        environment:
+            TZ: America/Mexico_City
+            PUERTO: 3000
+            # La aplicación usa su propia cuenta con privilegios mínimos (S-07)
+            PGHOST: postgres
+            PGPORT: 5432
+            PGDATABASE: ${PGDATABASE:-sga}
+            PGUSER: sga_api
+            PGPASSWORD: ${SGA_API_CONTRASENA}
+        ports:
+            - '127.0.0.1:3000:3000'
+
+    # Enlace público temporal (https://….trycloudflare.com). Solo se inicia con
+    # `npm run enlace`; funciona mientras esta computadora y Docker estén encendidos.
+    tunel:
+        image: cloudflare/cloudflared:latest
+        container_name: sga-tunel
+        profiles: [enlace]
+        depends_on:
+            app:
+                condition: service_healthy
+        command: tunnel --no-autoupdate --url http://app:3000
+
+volumes:
+    datos_sga:

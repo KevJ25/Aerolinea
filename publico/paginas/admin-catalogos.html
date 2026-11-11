@@ -1,0 +1,129 @@
+<!doctype html>
+<html lang="es">
+    <head>
+        <meta charset="utf-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1" />
+        <title>Aeropuertos y aviones · Sistema de Gestión de Aerolínea</title>
+        <link rel="icon" href="/recursos/icono.svg" />
+        <link rel="stylesheet" href="/recursos/estilos.css" />
+        <script type="module" src="/recursos/admin-catalogos.js"></script>
+    </head>
+    <body>
+        <main class="principal">
+            <h1 class="titulo-pagina">Aeropuertos y aviones</h1>
+            <div id="mensaje" class="oculto"></div>
+
+            <section class="tarjeta" aria-labelledby="t-aeropuertos">
+                <h2 id="t-aeropuertos">Aeropuertos</h2>
+                <form id="form-aeropuerto" class="filtros" novalidate>
+                    <div class="campo">
+                        <label for="a-iata">Código IATA</label>
+                        <input
+                            id="a-iata"
+                            name="codigoIata"
+                            type="text"
+                            maxlength="3"
+                            autocomplete="off"
+                        />
+                    </div>
+                    <div class="campo">
+                        <label for="a-nombre">Nombre</label>
+                        <input id="a-nombre" name="nombre" type="text" maxlength="120" />
+                    </div>
+                    <div class="campo">
+                        <label for="a-ciudad">Ciudad</label>
+                        <input id="a-ciudad" name="ciudad" type="text" maxlength="80" />
+                    </div>
+                    <div class="campo">
+                        <label for="a-pais">País</label>
+                        <input id="a-pais" name="pais" type="text" maxlength="80" value="México" />
+                    </div>
+                    <button class="boton" type="submit">Agregar aeropuerto</button>
+                </form>
+                <div id="mensaje-aeropuerto" class="oculto"></div>
+                <div class="tabla-contenedor">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th scope="col">IATA</th>
+                                <th scope="col">Nombre</th>
+                                <th scope="col">Ciudad</th>
+                                <th scope="col">País</th>
+                                <th scope="col">Estado</th>
+                                <th scope="col" class="alinear-derecha">Acciones</th>
+                            </tr>
+                        </thead>
+                        <tbody id="filas-aeropuertos"></tbody>
+                    </table>
+                </div>
+            </section>
+
+            <section class="tarjeta" aria-labelledby="t-aviones">
+                <h2 id="t-aviones">Aviones</h2>
+                <form id="form-avion" class="filtros" novalidate>
+                    <div class="campo">
+                        <label for="v-matricula">Matrícula</label>
+                        <input
+                            id="v-matricula"
+                            name="matricula"
+                            type="text"
+                            maxlength="10"
+                            autocomplete="off"
+                        />
+                    </div>
+                    <div class="campo">
+                        <label for="v-modelo">Modelo</label>
+                        <input id="v-modelo" name="modelo" type="text" maxlength="120" />
+                    </div>
+                    <div class="campo">
+                        <label for="v-capacidad">Capacidad</label>
+                        <input id="v-capacidad" name="capacidad" type="number" min="1" max="600" />
+                    </div>
+                    <div class="campo">
+                        <label for="v-estado">Estado operativo</label>
+                        <select id="v-estado" name="estadoOperativo">
+                            <option value="DISPONIBLE">Disponible</option>
+                            <option value="MANTENIMIENTO">En mantenimiento</option>
+                            <option value="FUERA_DE_SERVICIO">Fuera de servicio</option>
+                        </select>
+                    </div>
+                    <button class="boton" type="submit">Registrar avión</button>
+                </form>
+                <p class="nota">
+                    La capacidad define cuántos asientos se generan en cada vuelo que se programe
+                    con este avión (RF-08). Los vuelos ya programados conservan sus asientos.
+                </p>
+                <div id="mensaje-avion" class="oculto"></div>
+                <div class="tabla-contenedor">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th scope="col">Matrícula</th>
+                                <th scope="col">Modelo</th>
+                                <th scope="col">Capacidad</th>
+                                <th scope="col">Estado operativo</th>
+                                <th scope="col">Vuelos programados</th>
+                                <th scope="col" class="alinear-derecha">Acciones</th>
+                            </tr>
+                        </thead>
+                        <tbody id="filas-aviones"></tbody>
+                    </table>
+                </div>
+            </section>
+        </main>
+
+        <dialog id="dlg-editar" aria-labelledby="dlg-editar-titulo">
+            <form id="form-editar" class="dialogo" novalidate>
+                <h2 id="dlg-editar-titulo">Editar</h2>
+                <div id="mensaje-editar" class="oculto"></div>
+                <div id="campos-editar" class="formulario"></div>
+                <div class="acciones">
+                    <button class="boton boton--secundario" type="button" data-cerrar>
+                        Cancelar
+                    </button>
+                    <button class="boton" type="submit">Guardar</button>
+                </div>
+            </form>
+        </dialog>
+    </body>
+</html>

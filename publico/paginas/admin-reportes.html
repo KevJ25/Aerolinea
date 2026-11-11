@@ -1,0 +1,54 @@
+<!doctype html>
+<html lang="es">
+    <head>
+        <meta charset="utf-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1" />
+        <title>Reportes · Sistema de Gestión de Aerolínea</title>
+        <link rel="icon" href="/recursos/icono.svg" />
+        <link rel="stylesheet" href="/recursos/estilos.css" />
+        <script type="module" src="/recursos/admin-reportes.js"></script>
+    </head>
+    <body>
+        <main class="principal">
+            <h1 class="titulo-pagina">Reportes</h1>
+            <div class="pestanas" role="tablist" aria-label="Tipo de reporte">
+                <button type="button" role="tab" data-reporte="ocupacion" aria-selected="true">
+                    Ocupación por vuelo
+                </button>
+                <button type="button" role="tab" data-reporte="reservaciones" aria-selected="false">
+                    Reservaciones por periodo
+                </button>
+                <button type="button" role="tab" data-reporte="pagos" aria-selected="false">
+                    Pagos registrados
+                </button>
+            </div>
+            <form id="filtros" class="barra-busqueda" novalidate>
+                <div class="campo">
+                    <label for="desde" id="etiqueta-desde">Desde</label>
+                    <input id="desde" name="desde" type="date" />
+                </div>
+                <div class="campo">
+                    <label for="hasta" id="etiqueta-hasta">Hasta</label>
+                    <input id="hasta" name="hasta" type="date" />
+                </div>
+                <button class="boton" type="submit">Generar reporte</button>
+                <button id="csv" class="boton boton--secundario" type="button">
+                    Descargar CSV
+                </button>
+                <button id="imprimir" class="boton boton--secundario" type="button">
+                    Imprimir o PDF
+                </button>
+            </form>
+            <div id="mensaje" class="oculto"></div>
+            <h2 id="titulo-reporte"></h2>
+            <div class="tabla-contenedor">
+                <table>
+                    <thead id="encabezado"></thead>
+                    <tbody id="filas"></tbody>
+                    <tfoot id="totales"></tfoot>
+                </table>
+            </div>
+            <p id="pie" class="nota"></p>
+        </main>
+    </body>
+</html>

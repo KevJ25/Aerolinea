@@ -1,0 +1,193 @@
+<!doctype html>
+<html lang="es">
+    <head>
+        <meta charset="utf-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1" />
+        <title>Rutas y vuelos · Sistema de Gestión de Aerolínea</title>
+        <link rel="icon" href="/recursos/icono.svg" />
+        <link rel="stylesheet" href="/recursos/estilos.css" />
+        <script type="module" src="/recursos/admin-vuelos.js"></script>
+    </head>
+    <body>
+        <main class="principal">
+            <h1 class="titulo-pagina">Rutas y vuelos</h1>
+            <div id="mensaje" class="oculto"></div>
+
+            <section class="tarjeta" aria-labelledby="t-rutas">
+                <h2 id="t-rutas">Rutas</h2>
+                <form id="form-ruta" class="filtros" novalidate>
+                    <div class="campo">
+                        <label for="r-origen">Origen</label>
+                        <select id="r-origen" name="idOrigen"></select>
+                    </div>
+                    <div class="campo">
+                        <label for="r-destino">Destino</label>
+                        <select id="r-destino" name="idDestino"></select>
+                    </div>
+                    <button class="boton" type="submit">Agregar ruta</button>
+                </form>
+                <div id="mensaje-ruta" class="oculto"></div>
+                <div class="tabla-contenedor">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th scope="col">Origen</th>
+                                <th scope="col">Destino</th>
+                                <th scope="col">Estado</th>
+                                <th scope="col" class="alinear-derecha">Acciones</th>
+                            </tr>
+                        </thead>
+                        <tbody id="filas-rutas"></tbody>
+                    </table>
+                </div>
+            </section>
+
+            <section class="tarjeta" aria-labelledby="t-programar">
+                <h2 id="t-programar">Programar vuelo</h2>
+                <form id="form-vuelo" class="formulario" novalidate>
+                    <div class="campos-2">
+                        <div class="campo">
+                            <label for="f-numero">Número de vuelo</label>
+                            <input
+                                id="f-numero"
+                                name="numeroVuelo"
+                                type="text"
+                                maxlength="10"
+                                placeholder="SG 1204"
+                            />
+                        </div>
+                        <div class="campo">
+                            <label for="f-ruta">Ruta</label>
+                            <select id="f-ruta" name="idRuta"></select>
+                        </div>
+                        <div class="campo">
+                            <label for="f-avion">Aeronave</label>
+                            <select id="f-avion" name="idAvion"></select>
+                        </div>
+                        <div class="campo">
+                            <label for="f-salida">Salida (hora del centro de México)</label>
+                            <input id="f-salida" name="salida" type="datetime-local" />
+                        </div>
+                        <div class="campo">
+                            <label for="f-llegada">Llegada (hora del centro de México)</label>
+                            <input id="f-llegada" name="llegada" type="datetime-local" />
+                        </div>
+                        <div class="campo">
+                            <label for="f-tarifa">Tarifa por asiento (MXN)</label>
+                            <input
+                                id="f-tarifa"
+                                name="tarifa"
+                                type="number"
+                                min="0.01"
+                                step="0.01"
+                            />
+                        </div>
+                    </div>
+                    <div id="mensaje-vuelo" class="oculto"></div>
+                    <p class="nota">
+                        Al programar el vuelo se generan automáticamente tantos asientos como la
+                        capacidad de la aeronave (RF-08).
+                    </p>
+                    <div><button class="boton" type="submit">Programar vuelo</button></div>
+                </form>
+            </section>
+
+            <section class="tarjeta" aria-labelledby="t-vuelos">
+                <div class="fila-titulo">
+                    <h2 id="t-vuelos">Vuelos</h2>
+                    <div class="campo">
+                        <label for="filtro-estado" class="visualmente-oculto"
+                            >Filtrar por estado</label
+                        >
+                        <select id="filtro-estado">
+                            <option value="">Todos los estados</option>
+                            <option>PROGRAMADO</option>
+                            <option>ABIERTO</option>
+                            <option>RETRASADO</option>
+                            <option>EN VUELO</option>
+                            <option>ATERRIZADO</option>
+                            <option>CANCELADO</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="tabla-contenedor">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th scope="col">Vuelo</th>
+                                <th scope="col">Ruta</th>
+                                <th scope="col">Salida</th>
+                                <th scope="col">Aeronave</th>
+                                <th scope="col">Ocupación</th>
+                                <th scope="col">Tarifa</th>
+                                <th scope="col">Estado</th>
+                                <th scope="col" class="alinear-derecha">Acciones</th>
+                            </tr>
+                        </thead>
+                        <tbody id="filas-vuelos"></tbody>
+                    </table>
+                </div>
+            </section>
+        </main>
+
+        <dialog id="dlg-editar" aria-labelledby="dlg-editar-titulo">
+            <form id="form-editar" class="dialogo" novalidate>
+                <h2 id="dlg-editar-titulo">Editar vuelo</h2>
+                <div id="mensaje-editar" class="oculto"></div>
+                <div class="campo">
+                    <label for="e-salida">Salida</label>
+                    <input id="e-salida" name="salida" type="datetime-local" />
+                </div>
+                <div class="campo">
+                    <label for="e-llegada">Llegada</label>
+                    <input id="e-llegada" name="llegada" type="datetime-local" />
+                </div>
+                <div class="campo">
+                    <label for="e-tarifa">Tarifa (MXN)</label>
+                    <input id="e-tarifa" name="tarifa" type="number" min="0.01" step="0.01" />
+                </div>
+                <div class="campo">
+                    <label for="e-estado">Estado</label>
+                    <select id="e-estado" name="estado">
+                        <option>PROGRAMADO</option>
+                        <option>ABIERTO</option>
+                        <option>RETRASADO</option>
+                        <option>EN VUELO</option>
+                        <option>ATERRIZADO</option>
+                    </select>
+                </div>
+                <div class="acciones">
+                    <button class="boton boton--secundario" type="button" data-cerrar>
+                        Cancelar
+                    </button>
+                    <button class="boton" type="submit">Guardar</button>
+                </div>
+            </form>
+        </dialog>
+
+        <dialog
+            id="dlg-cancelar"
+            role="alertdialog"
+            aria-labelledby="dlg-cancelar-titulo"
+            aria-describedby="dlg-cancelar-texto"
+        >
+            <form id="form-cancelar" class="dialogo" novalidate>
+                <h2 id="dlg-cancelar-titulo">¿Cancelar el vuelo?</h2>
+                <p id="dlg-cancelar-texto"></p>
+                <div id="mensaje-cancelar" class="oculto"></div>
+                <div class="campo">
+                    <label for="c-confirmacion" id="c-etiqueta"
+                        >Escriba el número de vuelo para confirmar</label
+                    >
+                    <input id="c-confirmacion" name="confirmacion" type="text" autocomplete="off" />
+                </div>
+                <div class="acciones">
+                    <button class="boton boton--secundario" type="button" data-cerrar>
+                        Conservar vuelo
+                    </button>
+                    <button class="boton boton--peligro" type="submit">Cancelar vuelo</button>
+                </div>
+            </form>
+        </dialog>
+    </body>
+</html>

@@ -1,0 +1,71 @@
+{
+  "fecha": "2026-11-11T14:52:22.927Z",
+  "archivo": "rendimiento-202611111452.md",
+  "resultados": [
+    {
+      "cp": "CP-21",
+      "operacion": "Consulta de vuelos disponibles",
+      "umbralMs": 3000,
+      "concurrencia": 20,
+      "solicitudes": 200,
+      "minimo": 35.07239999999729,
+      "medio": 65.41177000000005,
+      "maximo": 208.6261999999988,
+      "p95": 154.1215000000011,
+      "errores": 0,
+      "veredicto": "Aprobado"
+    },
+    {
+      "cp": "CP-35",
+      "operacion": "Creación de una reservación completa",
+      "umbralMs": 3000,
+      "concurrencia": 20,
+      "solicitudes": 60,
+      "minimo": 75.0622000000003,
+      "medio": 120.05784166666629,
+      "maximo": 185.4585999999981,
+      "p95": 159.2344000000012,
+      "errores": 0,
+      "veredicto": "Aprobado"
+    },
+    {
+      "cp": "CP-36",
+      "operacion": "Registro de un pago",
+      "umbralMs": 3000,
+      "concurrencia": 20,
+      "solicitudes": 40,
+      "minimo": 56.71870000000126,
+      "medio": 78.38873250000006,
+      "maximo": 110.92529999999897,
+      "p95": 103.70160000000033,
+      "errores": 0,
+      "veredicto": "Aprobado"
+    },
+    {
+      "cp": "CP-37",
+      "operacion": "Generación de un reporte de ocupación (60 días)",
+      "umbralMs": 5000,
+      "concurrencia": 5,
+      "solicitudes": 20,
+      "minimo": 277.7582000000002,
+      "medio": 342.09528999999947,
+      "maximo": 398.7428,
+      "p95": 395.2632999999987,
+      "errores": 0,
+      "veredicto": "Aprobado"
+    },
+    {
+      "cp": "CP-38",
+      "operacion": "Pico de 100 solicitudes simultáneas",
+      "umbralMs": null,
+      "concurrencia": 100,
+      "solicitudes": 100,
+      "minimo": 247.81809999999678,
+      "medio": 397.59616999999963,
+      "maximo": 458.2433999999994,
+      "p95": 452.22589999999764,
+      "errores": 0,
+      "veredicto": "Aprobado"
+    }
+  ]
+}

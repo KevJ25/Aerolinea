@@ -1,0 +1,11 @@
+node_modules
+dist
+coverage
+respaldos
+evidencias
+.env
+.env.*
+.git
+db
+docs
+pruebas-aceptacion

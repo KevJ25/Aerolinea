@@ -1,0 +1,60 @@
+<!doctype html>
+<html lang="es">
+    <head>
+        <meta charset="utf-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1" />
+        <title>Iniciar sesión · Sistema de Gestión de Aerolínea</title>
+        <link rel="icon" href="/recursos/icono.svg" />
+        <link rel="stylesheet" href="/recursos/estilos.css" />
+        <script type="module" src="/recursos/iniciar-sesion.js"></script>
+    </head>
+    <body>
+        <div class="acceso">
+            <section class="acceso__panel" aria-label="Presentación">
+                <span class="marca">Sistema de Gestión de Aerolínea</span>
+                <h1>Vuelos, asientos y reservaciones en un solo lugar.</h1>
+                <p>
+                    Pasajeros, empleados y administradores ingresan con la misma cuenta; cada perfil
+                    ve solo lo que le corresponde.
+                </p>
+                <p class="nota-panel">
+                    Proyecto académico. Los datos son ficticios y el sistema no procesa pagos
+                    reales.
+                </p>
+            </section>
+            <main class="acceso__formulario">
+                <form id="formulario" class="formulario" novalidate aria-labelledby="titulo">
+                    <div>
+                        <h2 id="titulo">Iniciar sesión</h2>
+                        <p class="nota">Ingrese con su correo y contraseña.</p>
+                    </div>
+                    <div id="mensaje" class="oculto"></div>
+                    <div class="campo">
+                        <label for="correo">Correo electrónico</label>
+                        <input
+                            id="correo"
+                            name="correo"
+                            type="email"
+                            autocomplete="username"
+                            required
+                        />
+                    </div>
+                    <div class="campo">
+                        <label for="contrasena">Contraseña</label>
+                        <input
+                            id="contrasena"
+                            name="contrasena"
+                            type="password"
+                            autocomplete="current-password"
+                            required
+                        />
+                    </div>
+                    <button id="enviar" class="boton" type="submit">Iniciar sesión</button>
+                    <p class="nota">
+                        ¿Aún no tiene cuenta? <a href="/registro">Crear cuenta de pasajero</a>
+                    </p>
+                </form>
+            </main>
+        </div>
+    </body>
+</html>

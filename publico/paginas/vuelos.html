@@ -1,0 +1,73 @@
+<!doctype html>
+<html lang="es">
+    <head>
+        <meta charset="utf-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1" />
+        <title>Vuelos · Sistema de Gestión de Aerolínea</title>
+        <link rel="icon" href="/recursos/icono.svg" />
+        <link rel="stylesheet" href="/recursos/estilos.css" />
+        <script type="module" src="/recursos/vuelos.js"></script>
+    </head>
+    <body>
+        <main class="principal">
+            <h1 class="titulo-pagina">Buscar vuelos</h1>
+            <form id="busqueda" class="barra-busqueda" role="search" novalidate>
+                <div class="campo">
+                    <label for="origen">Origen</label>
+                    <select id="origen" name="origen"></select>
+                </div>
+                <div class="campo">
+                    <label for="destino">Destino</label>
+                    <select id="destino" name="destino"></select>
+                </div>
+                <div class="campo">
+                    <label for="fecha">Fecha de salida</label>
+                    <input id="fecha" name="fecha" type="date" />
+                </div>
+                <button class="boton" type="submit">Buscar vuelos</button>
+                <button id="limpiar" class="boton boton--secundario" type="button">
+                    Limpiar filtros
+                </button>
+            </form>
+
+            <section aria-labelledby="t-calendario" class="formulario">
+                <h2 id="t-calendario" class="visualmente-oculto">Calendario de vuelos</h2>
+                <div class="franja">
+                    <button
+                        id="anterior"
+                        class="franja__flecha"
+                        type="button"
+                        aria-label="Dos semanas anteriores"
+                    >
+                        ‹
+                    </button>
+                    <div
+                        id="dias"
+                        class="franja__dias"
+                        role="group"
+                        aria-label="Días con vuelos disponibles"
+                    ></div>
+                    <button
+                        id="siguiente"
+                        class="franja__flecha"
+                        type="button"
+                        aria-label="Dos semanas siguientes"
+                    >
+                        ›
+                    </button>
+                </div>
+            </section>
+
+            <div id="mensaje" class="oculto"></div>
+            <div class="fila-resultados">
+                <h2 id="titulo-resultados"></h2>
+                <span id="conteo" class="nota"></span>
+            </div>
+            <div id="resultados" class="lista-vuelos" aria-live="polite"></div>
+            <p class="nota">
+                Se muestran los vuelos que todavía admiten reservaciones; la venta cierra 24 horas
+                antes de la salida. Las horas son del centro de México.
+            </p>
+        </main>
+    </body>
+</html>

@@ -1,0 +1,70 @@
+<!doctype html>
+<html lang="es">
+    <head>
+        <meta charset="utf-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1" />
+        <title>Reservaciones · Sistema de Gestión de Aerolínea</title>
+        <link rel="icon" href="/recursos/icono.svg" />
+        <link rel="stylesheet" href="/recursos/estilos.css" />
+        <script type="module" src="/recursos/reservaciones.js"></script>
+    </head>
+    <body>
+        <main class="principal">
+            <div class="fila-titulo">
+                <h1 class="titulo-pagina">Reservaciones</h1>
+                <a id="nueva" class="boton oculto" href="/vuelos">Reservar para un pasajero</a>
+            </div>
+            <div id="mensaje" class="oculto"></div>
+            <form id="filtros" class="filtros" role="search" novalidate>
+                <div class="campo">
+                    <label for="codigo">Código de reservación</label>
+                    <input id="codigo" name="codigo" type="text" maxlength="8" autocomplete="off" />
+                </div>
+                <div class="campo">
+                    <label for="correo">Correo del pasajero</label>
+                    <input id="correo" name="correo" type="email" maxlength="120" />
+                </div>
+                <button class="boton boton--secundario" type="submit">Buscar</button>
+            </form>
+            <div class="tabla-contenedor">
+                <table>
+                    <thead>
+                        <tr>
+                            <th scope="col">Código</th>
+                            <th scope="col">Pasajero</th>
+                            <th scope="col">Vuelo</th>
+                            <th scope="col">Ruta</th>
+                            <th scope="col">Salida</th>
+                            <th scope="col">Asiento</th>
+                            <th scope="col">Reservación</th>
+                            <th scope="col">Pago</th>
+                            <th scope="col" class="alinear-derecha">Acciones</th>
+                        </tr>
+                    </thead>
+                    <tbody id="filas"></tbody>
+                </table>
+            </div>
+            <p class="nota">Sin filtros se muestran las 100 reservaciones más recientes.</p>
+        </main>
+        <dialog
+            id="dlg-cancelar"
+            role="alertdialog"
+            aria-labelledby="dlg-cancelar-titulo"
+            aria-describedby="dlg-cancelar-texto"
+        >
+            <div class="dialogo">
+                <h2 id="dlg-cancelar-titulo">¿Cancelar la reservación?</h2>
+                <p id="dlg-cancelar-texto"></p>
+                <div id="mensaje-cancelar" class="oculto"></div>
+                <div class="acciones">
+                    <button id="dlg-cancelar-no" class="boton boton--secundario" type="button">
+                        Conservar reservación
+                    </button>
+                    <button id="dlg-cancelar-si" class="boton boton--peligro" type="button">
+                        Cancelar reservación
+                    </button>
+                </div>
+            </div>
+        </dialog>
+    </body>
+</html>

@@ -1,0 +1,13 @@
+node_modules/
+dist/
+coverage/
+.env
+.env.*
+!.env.ejemplo
+*.log
+# Respaldos: contienen datos de usuarios y nunca se suben al repositorio (Tabla 66)
+respaldos/
+*.tar.gpg
+*.tar.gpg.sha256
+# Expedientes de auditoría: se entregan al equipo auditor, no se versionan
+evidencias/expediente_bd_*

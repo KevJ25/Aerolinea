@@ -1,0 +1,66 @@
+<!doctype html>
+<html lang="es">
+    <head>
+        <meta charset="utf-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1" />
+        <title>Check-in · Sistema de Gestión de Aerolínea</title>
+        <link rel="icon" href="/recursos/icono.svg" />
+        <link rel="stylesheet" href="/recursos/estilos.css" />
+        <script type="module" src="/recursos/check-in.js"></script>
+    </head>
+    <body>
+        <main class="principal">
+            <h1 class="titulo-pagina no-imprimir">Check-in de pasajero</h1>
+            <form id="busqueda" class="barra-busqueda" role="search" novalidate>
+                <div class="campo">
+                    <label for="codigo">Código de reservación</label>
+                    <input id="codigo" name="codigo" type="text" maxlength="8" autocomplete="off" />
+                </div>
+                <button class="boton" type="submit">Buscar</button>
+            </form>
+            <div id="mensaje" class="oculto"></div>
+            <section
+                id="tarjeta-reserva"
+                class="tarjeta oculto no-imprimir"
+                aria-labelledby="t-pasajero"
+            >
+                <div class="fila-titulo">
+                    <h2 id="t-pasajero"></h2>
+                    <span id="estado"></span>
+                </div>
+                <dl class="datos">
+                    <dt>Correo</dt>
+                    <dd id="d-correo"></dd>
+                    <dt>Vuelo</dt>
+                    <dd id="d-vuelo"></dd>
+                    <dt>Salida</dt>
+                    <dd id="d-salida"></dd>
+                    <dt>Asiento</dt>
+                    <dd id="d-asiento"></dd>
+                    <dt>Estado del vuelo</dt>
+                    <dd id="d-vuelo-estado"></dd>
+                    <dt>Pago</dt>
+                    <dd id="d-pago"></dd>
+                </dl>
+                <div id="motivo" class="oculto"></div>
+                <form id="form-checkin" class="formulario oculto" novalidate>
+                    <label class="casilla">
+                        <input id="identificacion" type="checkbox" />
+                        <span>Verifiqué la identificación oficial del pasajero</span>
+                    </label>
+                    <div><button class="boton" type="submit">Realizar check-in</button></div>
+                </form>
+            </section>
+            <section
+                id="seccion-pase"
+                class="formulario oculto"
+                aria-label="Pase de abordar emitido"
+            >
+                <div id="pase"></div>
+                <div class="acciones no-imprimir">
+                    <button id="imprimir" class="boton" type="button">Imprimir pase</button>
+                </div>
+            </section>
+        </main>
+    </body>
+</html>

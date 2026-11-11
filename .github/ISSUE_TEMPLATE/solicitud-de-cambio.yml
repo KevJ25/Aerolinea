@@ -1,0 +1,64 @@
+name: Solicitud de cambio
+description: Formato SC-xx de la sección 16.2 del Manual de Calidad
+title: 'SC-__: '
+labels: [solicitud-de-cambio]
+body:
+    - type: input
+      id: modulo
+      attributes:
+          label: Módulo afectado
+          placeholder: M-06
+      validations:
+          required: true
+    - type: input
+      id: requisitos
+      attributes:
+          label: Requisitos afectados
+          placeholder: RF-10, RF-11
+      validations:
+          required: true
+    - type: textarea
+      id: descripcion
+      attributes:
+          label: Descripción del cambio
+      validations:
+          required: true
+    - type: textarea
+      id: justificacion
+      attributes:
+          label: Justificación operativa
+      validations:
+          required: true
+    - type: dropdown
+      id: clasificacion
+      attributes:
+          label: Clasificación (Tabla 26)
+          options:
+              - Menor · autoriza Scrum Master · 2 días hábiles
+              - Mayor · autoriza Product Owner · 5 días hábiles
+              - Crítico · autoriza Asesor académico · 5 días hábiles
+              - Urgente · autoriza Product Owner · 24 horas
+      validations:
+          required: true
+    - type: textarea
+      id: impacto-cronograma
+      attributes:
+          label: Análisis de impacto en cronograma
+      validations:
+          required: true
+    - type: textarea
+      id: impacto-arquitectura
+      attributes:
+          label: Análisis de impacto en arquitectura
+      validations:
+          required: true
+    - type: textarea
+      id: impacto-pruebas
+      attributes:
+          label: Análisis de impacto en pruebas
+      validations:
+          required: true
+    - type: markdown
+      attributes:
+          value: |
+              La resolución (Autorizado / Rechazado / Pospuesto), quién autorizó, la fecha de implementación y la nueva línea base se registran como comentario de la persona que autoriza, y la solicitud se cierra con la etiqueta correspondiente.

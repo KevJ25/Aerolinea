@@ -1,0 +1,123 @@
+# Integración continua · Manual de Calidad MC-SGA-001
+#   14.4  análisis estático automatizado en cada integración
+#   15.1  la rama main y develop solo reciben cambios verificados
+#   15.4  convención de mensajes de confirmación con clave trazable
+#   18    políticas de auditoría pgAudit (AUD-01 a AUD-08)
+#   20.1  pruebas unitarias y de integración con la base de datos
+#   31    respaldo cifrado y prueba de restauración contra el RTO
+#   KPI-09 vulnerabilidades críticas no corregidas = 0
+name: Integración continua
+
+on:
+    pull_request:
+        branches: [develop, main, 'release/**']
+    push:
+        branches: [develop, main]
+
+permissions:
+    contents: read
+
+jobs:
+    codigo:
+        name: Análisis estático y pruebas unitarias
+        runs-on: ubuntu-24.04
+        steps:
+            - uses: actions/checkout@v4
+            - uses: actions/setup-node@v4
+              with:
+                  node-version-file: .nvmrc
+                  cache: npm
+            - run: npm ci
+            - name: Formato (sección 14.2)
+              run: npm run formato
+            - name: Análisis estático (secciones 14.1 a 14.3, RNF-08)
+              run: npm run lint
+            - name: Compilación
+              run: npm run build
+            - name: Pruebas unitarias con cobertura
+              run: npm run test:cobertura
+            - name: Vulnerabilidades en dependencias de producción (KPI-09)
+              run: npm audit --omit=dev --audit-level=high
+            - name: Conservar reporte de cobertura como evidencia
+              uses: actions/upload-artifact@v4
+              with:
+                  name: cobertura
+                  path: coverage/
+                  retention-days: 90
+
+    base-de-datos:
+        name: Base de datos, auditoría, respaldos y aceptación
+        runs-on: ubuntu-24.04
+        env:
+            PGHOST: localhost
+            PGPORT: '5432'
+            PGUSER: sga
+            PGPASSWORD: sga-ci
+            PGDATABASE: postgres
+        steps:
+            - uses: actions/checkout@v4
+            - name: Análisis estático de los scripts de shell
+              run: shellcheck -S warning db/*.sh db/pruebas/*.sh db/respaldos/*.sh db/evidencias/*.sh
+            - name: Cliente de PostgreSQL 16
+              run: sudo apt-get install -y --no-install-recommends postgresql-client-16
+            - name: Construir la imagen con pgAudit (db/servidor/Dockerfile)
+              run: docker build -t sga-postgres:16 db/servidor
+            - name: Iniciar el servidor
+              run: |
+                  docker run -d --name sga-postgres -p 5432:5432 \
+                    -e POSTGRES_USER=sga -e POSTGRES_PASSWORD=sga-ci -e POSTGRES_DB=sga \
+                    -e TZ=America/Mexico_City sga-postgres:16
+                  for intento in $(seq 1 60); do
+                    pg_isready -q && break
+                    sleep 1
+                  done
+                  psql -X -tAc "SHOW shared_preload_libraries" | grep -q pgaudit
+            - name: Migraciones, reglas, privilegios, operaciones, concurrencia, pgAudit y respaldos
+              run: bash db/probar.sh
+            - uses: actions/setup-node@v4
+              with:
+                  node-version-file: .nvmrc
+                  cache: npm
+            - name: Preparar la base del sistema y la cuenta de la aplicación
+              env:
+                  PGDATABASE: sga
+                  SGA_API_CONTRASENA: ContrasenaAplicacionCI-2026
+              run: bash db/preparar.sh
+            - name: Iniciar la aplicación
+              env:
+                  PGDATABASE: sga
+                  PGUSER: sga_api
+                  PGPASSWORD: ContrasenaAplicacionCI-2026
+              run: |
+                  npm ci
+                  npm run build
+                  nohup node dist/main.js > aplicacion.log 2>&1 &
+                  for intento in $(seq 1 30); do
+                    curl -sf http://127.0.0.1:3000/salud && break
+                    sleep 1
+                  done
+            - name: Pruebas de aceptación de los Sprints 1 a 5
+              env:
+                  PGDATABASE: sga
+              run: node pruebas-aceptacion/ejecutar.mjs
+            - name: Registros ante una falla
+              if: failure()
+              run: |
+                  docker logs sga-postgres
+                  cat aplicacion.log || true
+
+    commits:
+        name: Mensajes de commit trazables
+        if: github.event_name == 'pull_request'
+        runs-on: ubuntu-24.04
+        steps:
+            - uses: actions/checkout@v4
+              with:
+                  fetch-depth: 0
+            - uses: actions/setup-node@v4
+              with:
+                  node-version-file: .nvmrc
+                  cache: npm
+            - run: npm ci
+            - name: Validar convención de la sección 15.4
+              run: npx commitlint --from ${{ github.event.pull_request.base.sha }} --to ${{ github.event.pull_request.head.sha }} --verbose

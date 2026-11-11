@@ -1,0 +1,89 @@
+<!doctype html>
+<html lang="es">
+    <head>
+        <meta charset="utf-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1" />
+        <title>Pago de la reservación · Sistema de Gestión de Aerolínea</title>
+        <link rel="icon" href="/recursos/icono.svg" />
+        <link rel="stylesheet" href="/recursos/estilos.css" />
+        <script type="module" src="/recursos/pago.js"></script>
+    </head>
+    <body>
+        <main class="principal">
+            <p class="no-imprimir"><a href="/mis-reservaciones">Volver a Mis reservaciones</a></p>
+            <div class="disposicion-reserva">
+                <section class="tarjeta" aria-labelledby="t-pago">
+                    <div class="fila-titulo">
+                        <h1 id="t-pago" class="titulo-pagina">Registrar pago</h1>
+                        <span id="estado-reserva"></span>
+                    </div>
+                    <p class="mensaje mensaje--info">
+                        Pago simulado. No se realiza ningún cargo ni se conecta con bancos: solo se
+                        registra la operación para fines de prueba. No escriba datos de tarjetas
+                        reales.
+                    </p>
+                    <div id="mensaje" class="oculto"></div>
+                    <form id="formulario" class="formulario" novalidate>
+                        <fieldset class="formulario">
+                            <legend class="etiqueta">Método de prueba</legend>
+                            <label class="metodo">
+                                <input
+                                    type="radio"
+                                    name="metodo"
+                                    value="TARJETA_PRUEBA_APROBADA"
+                                    checked
+                                />
+                                <span
+                                    ><strong>Tarjeta de prueba aprobada</strong
+                                    ><span class="nota">Simula un pago autorizado</span></span
+                                >
+                            </label>
+                            <label class="metodo">
+                                <input
+                                    type="radio"
+                                    name="metodo"
+                                    value="TARJETA_PRUEBA_RECHAZADA"
+                                />
+                                <span
+                                    ><strong>Tarjeta de prueba rechazada</strong
+                                    ><span class="nota"
+                                        >Simula un pago declinado por el banco</span
+                                    ></span
+                                >
+                            </label>
+                        </fieldset>
+                        <div>
+                            <span class="etiqueta">Monto a pagar</span>
+                            <div id="monto" class="monto-fijo"></div>
+                            <span class="nota"
+                                >Calculado por el sistema con la tarifa del vuelo (RN-08).</span
+                            >
+                        </div>
+                        <button id="pagar" class="boton" type="submit">Pagar</button>
+                    </form>
+                </section>
+                <aside class="tarjeta" aria-labelledby="t-resumen">
+                    <h2 id="t-resumen">Su reservación</h2>
+                    <div>
+                        <span class="nota">Código de reservación</span>
+                        <div id="r-codigo" class="codigo monto-fijo"></div>
+                    </div>
+                    <div class="resumen-iata">
+                        <span id="r-origen" class="iata"></span><span aria-hidden="true">→</span
+                        ><span id="r-destino" class="iata"></span>
+                    </div>
+                    <dl class="datos">
+                        <dt>Vuelo</dt>
+                        <dd id="r-vuelo"></dd>
+                        <dt>Salida</dt>
+                        <dd id="r-salida"></dd>
+                        <dt>Asiento</dt>
+                        <dd id="r-asiento"></dd>
+                        <dt>Pagar antes de</dt>
+                        <dd id="r-expira"></dd>
+                    </dl>
+                </aside>
+            </div>
+        </main>
+    </body>
+</html>

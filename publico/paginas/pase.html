@@ -1,0 +1,28 @@
+<!doctype html>
+<html lang="es">
+    <head>
+        <meta charset="utf-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1" />
+        <title>Pase de abordar · Sistema de Gestión de Aerolínea</title>
+        <link rel="icon" href="/recursos/icono.svg" />
+        <link rel="stylesheet" href="/recursos/estilos.css" />
+        <script type="module" src="/recursos/pase.js"></script>
+    </head>
+    <body>
+        <main class="principal">
+            <div class="fila-titulo no-imprimir">
+                <h1 class="titulo-pagina">Pase de abordar</h1>
+                <div class="acciones">
+                    <a id="volver" class="boton boton--secundario" href="/mis-reservaciones"
+                        >Volver</a
+                    >
+                    <button id="imprimir" class="boton" type="button">
+                        Imprimir o guardar como PDF
+                    </button>
+                </div>
+            </div>
+            <div id="mensaje" class="oculto"></div>
+            <div id="pase"></div>
+        </main>
+    </body>
+</html>

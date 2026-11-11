@@ -1,0 +1,52 @@
+name: Defecto
+description: Registro de un defecto conforme a las secciones 20.3 y 20.4 del Manual de Calidad
+title: 'DEF-__: '
+labels: [defecto]
+body:
+    - type: dropdown
+      id: severidad
+      attributes:
+          label: Severidad (Tabla 40)
+          options:
+              - Crítica · impide la operación o compromete datos de usuarios · corregir en 24 h
+              - Alta · un requisito principal no se cumple · corregir en 3 días hábiles
+              - Media · un requisito secundario no se cumple · corregir en el Sprint
+              - Baja · cosmético o de redacción · corregir en el siguiente Sprint
+      validations:
+          required: true
+    - type: input
+      id: requisito
+      attributes:
+          label: Requisito afectado
+          placeholder: RF-11
+      validations:
+          required: true
+    - type: input
+      id: caso
+      attributes:
+          label: Caso de prueba que lo detectó
+          placeholder: CP-19
+    - type: dropdown
+      id: ambiente
+      attributes:
+          label: Ambiente (Tabla 25)
+          options: [Desarrollo, Integración, Calidad (QA), Demostración]
+      validations:
+          required: true
+    - type: textarea
+      id: pasos
+      attributes:
+          label: Pasos para reproducir
+      validations:
+          required: true
+    - type: textarea
+      id: esperado
+      attributes:
+          label: Resultado esperado y resultado obtenido
+      validations:
+          required: true
+    - type: textarea
+      id: evidencia
+      attributes:
+          label: Evidencia
+          description: Capturas, bitácora o salida de la prueba. No incluya contraseñas ni datos personales reales.

@@ -1,0 +1,122 @@
+<!doctype html>
+<html lang="es">
+    <head>
+        <meta charset="utf-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1" />
+        <title>Usuarios y roles · Sistema de Gestión de Aerolínea</title>
+        <link rel="icon" href="/recursos/icono.svg" />
+        <link rel="stylesheet" href="/recursos/estilos.css" />
+        <script type="module" src="/recursos/admin-usuarios.js"></script>
+    </head>
+    <body>
+        <main class="principal">
+            <div class="fila-titulo">
+                <h1 class="titulo-pagina">Usuarios y roles</h1>
+                <button id="agregar" class="boton" type="button">Agregar usuario</button>
+            </div>
+            <div id="mensaje" class="oculto"></div>
+            <form id="filtros" class="filtros" role="search">
+                <div class="campo">
+                    <label for="buscar">Buscar por nombre o correo</label>
+                    <input id="buscar" name="buscar" type="search" maxlength="120" />
+                </div>
+                <div class="campo">
+                    <label for="filtro-rol">Perfil</label>
+                    <select id="filtro-rol" name="rol">
+                        <option value="">Todos los perfiles</option>
+                        <option>Administrador</option>
+                        <option>Empleado</option>
+                        <option>Pasajero</option>
+                    </select>
+                </div>
+                <button class="boton boton--secundario" type="submit">Buscar</button>
+            </form>
+            <div class="tabla-contenedor">
+                <table>
+                    <thead>
+                        <tr>
+                            <th scope="col">Nombre</th>
+                            <th scope="col">Correo</th>
+                            <th scope="col">Perfil</th>
+                            <th scope="col">Estado</th>
+                            <th scope="col">Alta</th>
+                            <th scope="col" class="alinear-derecha">Acciones</th>
+                        </tr>
+                    </thead>
+                    <tbody id="filas"></tbody>
+                </table>
+            </div>
+        </main>
+
+        <dialog id="dlg-usuario" aria-labelledby="dlg-usuario-titulo">
+            <form id="form-usuario" class="dialogo" novalidate>
+                <h2 id="dlg-usuario-titulo">Agregar usuario</h2>
+                <div id="mensaje-usuario" class="oculto"></div>
+                <div class="campo">
+                    <label for="u-nombre">Nombre completo</label>
+                    <input id="u-nombre" name="nombre" type="text" maxlength="120" required />
+                </div>
+                <div class="campo">
+                    <label for="u-correo">Correo electrónico</label>
+                    <input id="u-correo" name="correo" type="email" maxlength="120" required />
+                </div>
+                <div class="campo">
+                    <label for="u-rol">Perfil</label>
+                    <select id="u-rol" name="rol">
+                        <option>Pasajero</option>
+                        <option>Empleado</option>
+                        <option>Administrador</option>
+                    </select>
+                </div>
+                <div id="bloque-contrasena" class="campo">
+                    <label for="u-contrasena">Contraseña inicial</label>
+                    <input
+                        id="u-contrasena"
+                        name="contrasena"
+                        type="password"
+                        autocomplete="new-password"
+                        maxlength="128"
+                    />
+                    <ul id="u-politica" class="politica"></ul>
+                </div>
+                <div class="acciones">
+                    <button class="boton boton--secundario" type="button" data-cerrar>
+                        Cancelar
+                    </button>
+                    <button class="boton" type="submit">Guardar</button>
+                </div>
+            </form>
+        </dialog>
+
+        <dialog
+            id="dlg-baja"
+            role="alertdialog"
+            aria-labelledby="dlg-baja-titulo"
+            aria-describedby="dlg-baja-texto"
+        >
+            <form id="form-baja" class="dialogo" novalidate>
+                <h2 id="dlg-baja-titulo">¿Dar de baja a este usuario?</h2>
+                <p id="dlg-baja-texto"></p>
+                <div id="mensaje-baja" class="oculto"></div>
+                <div class="campo">
+                    <label for="b-confirmacion" id="b-etiqueta"
+                        >Escriba el correo del usuario para confirmar</label
+                    >
+                    <input
+                        id="b-confirmacion"
+                        name="confirmacion"
+                        type="text"
+                        autocomplete="off"
+                        required
+                    />
+                </div>
+                <div class="acciones">
+                    <button class="boton boton--secundario" type="button" data-cerrar>
+                        Conservar usuario
+                    </button>
+                    <button class="boton boton--peligro" type="submit">Dar de baja</button>
+                </div>
+            </form>
+        </dialog>
+    </body>
+</html>
